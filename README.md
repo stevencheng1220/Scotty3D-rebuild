@@ -115,4 +115,3 @@
 - stb_perlin.h is part of the stb single-file public domain libraries for C/C++, which provides functions to generate Perlin noise. Perlin noise, created by Ken Perlin in the 1980s, is a gradient noise function that is widely used in computer graphics to produce natural-looking textures, terrain, and other procedural generation tasks.
 
 - The functions provided by stb_perlin.h allow generation of Perlin noise values at any point in 2D, 3D, or 4D space. It also offers features such as seamless tiling of noise, which is quite useful for generating textures that can be tiled without visible seams. Additionally, there are options to adjust parameters like octaves, for fractal noise generation, to control the level of detail and how "zoomed in" or "smooth" the noise appears.
-
