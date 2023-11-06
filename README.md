@@ -1,128 +1,118 @@
-# Scotty3D
-
-Scotty3D is the 3D modeling, rendering, and animation package that students complete as part of [15-462/662 Computer Graphics](http://15462.courses.cs.cmu.edu) at Carnegie Mellon University.
-
-The current version of the starter code is available at https://github.com/CMU-Graphics/Scotty3D .
-
-User documentation and example works are available at https://cmu-graphics.github.io/Scotty3D-docs/ .
+# Description of Sections
 
 
-## GitHub Setup
+## Dependencies
 
-Please do not use a public GitHub fork of this repository! We do not want solutions to be public. You should work in your own private repo.
-We recommended creating a mirrored private repository with multiple remotes. The following steps go over how to achieve this.
+### glad
+- GitHub: https://github.com/Dav1dde/glad
 
-The easiest (but not recommended) way is to download a zip from GitHub and make a private repository from that. The main disadvantage with this is that whenever there is an update to the base code, you will have to re-download the zip and manually merge the differences into your code. This is a pain, and you already have a lot to do in 15462/662, so instead, let `git` take care of this cumbersome "merging-updates" task:
+- In the context of OpenGL, "GLAD" is a library that acts as an OpenGL loader generator. It's not part of the OpenGL core API, but it is used to manage the loading of OpenGL functions in a portable and easy way across different platforms.
 
-1. Clone Scotty3D normally
-    - `git clone https://github.com/CMU-Graphics/Scotty3D.git`
+- OpenGL itself doesn't manage the direct communication between your application and the graphics drivers on your system. Instead, the system's graphics drivers provide the implementation of the OpenGL functions. Since different systems have different capabilities and different sets of functions they can support, these functions are not always available directly to be called.
 
-2. Create a new private repository (e.g. `MyScotty3D`)
-    - Do not initialize this repository - keep it completely empty.
-    - Let's say your repository is now hosted here: `https://github.com/your_id/MyScotty3D.git`
+- GLAD steps in to help with this issue. When developing an application with OpenGL, you can't just call an OpenGL function directly from your code because at compile time, the address of that function is not known. The functions need to be queried and loaded at runtime because their locations are determined by the driver at that time.
 
-3. Ensure that you understand the concept of `remote`s in git.
-    - When you clone a git repository, the default remote is named 'origin' and set to the URL you cloned from.
-    - We will set the `origin` of our local clone to point to `MyScotty3D.git`, but also have a remote called `sourcerepo` for the public `Scotty3D` repository.
-
-4. Now go back to your clone of Scotty3D. This is how we add the private remote:
-    - Since we cloned from the `CMU-Graphics/Scotty3D.git` repository, the current value of `origin` should be `https://github.com/CMU-Graphics/Scotty3D.git`
-        - You can check this using `git remote -v`, which should show:
-            ```
-            origin      https://github.com/CMU-Graphics/Scotty3D.git (fetch)
-            origin      https://github.com/CMU-Graphics/Scotty3D.git (push)
-            ```
-    - Rename `origin` to `sourcerepo`:
-        - `git remote rename origin sourcerepo`
-    - Add a new remote called `origin`:
-        - `git remote add origin https://github.com/your_id/MyScotty3D.git`
-    - We can now push the starter code to our private copy:
-        - `git push origin -u main`
-
-5. Congratulations! you have successfully _mirrored_ a git repository with all past commits intact. 
-
-Now, let's see why this setup may be useful: say we start doing an assignment and commit regularly to our private repo (our `origin`). Then the 15-462 staff push some new changes to the Scotty3D skeleton code that we want to pull in. But, we don't want to mess up the changes we've added to our private copy. Here's where git comes to the rescue:
-
-1. Commit all local changes to your `origin`.
-2. Run `git pull sourcerepo main` - this pulls all the changes from `sourcerepo` into your local copy.
-    - If there are files with changes in both `origin` and `sourcerepo`, git will attempt to automatically merge the updates. Git may create a "merge" commit for this.
-    - Unfortunately, there may be conflicts. Git will handle as many merges as it can, then then tell you which files have conflicts that need manual resolution. You can resolve the conflicts in your text editor and create a new commit to complete the `merge` process.
-3. After you have completed the merge, you now have all the updates locally. Push to your private origin to publish changes there too:
-    - `git push origin main`
+- Here's what GLAD does for you:
+    1. Function Loading
+        - It loads the function pointers (addresses) to OpenGL functions at runtime. This means that your application can use different versions and extensions of OpenGL without having to link to a specific OpenGL library at compile time.
+    2. Extension Handling
+        - It provides a convenient way to check at runtime whether a certain OpenGL extension is supported by the host system.
+    3. Loader Generation
+        - You can generate a GLAD loader specific to the version of OpenGL and the set of extensions that you need for your application.
+    4. Language Support
+        - Although typically used with C or C++, it also has support for other languages.
 
 
-## General Setup
+### imgui
+- GitHub: https://github.com/ocornut/imgui
 
-1. Install a C++ compiler:
-  - Windows: Visual Studio 2022
-  - MacOS: XCode (latest available)
-  - Linux: g++ (latest available)
-2. Install [node](https://nodejs.org) (our build system is written in command-line javascript.)
-3. Clone this repository.
-4. Download and extract the nest-libs as a child of the repository folder:
-  - Linux: https://github.com/15-466/nest-libs/releases/download/v0.10/nest-libs-linux-v0.10.tar.gz
-  - MacOS: https://github.com/15-466/nest-libs/releases/download/v0.10/nest-libs-macos-v0.10.tar.gz
-  - Windows: https://github.com/15-466/nest-libs/releases/download/v0.10/nest-libs-windows-v0.10.zip
+- Dear ImGui, often just referred to as ImGui, is an immediate mode graphical user interface (GUI) toolkit for C++. It is a bloat-free library that is particularly popular in game development and other real-time applications, but it can be used in any context where a simple, portable, and easy-to-integrate GUI is needed.
+
+- Immediate mode GUI libraries like ImGui differ from retained mode GUIs in that they are rebuilt every frame. You don't explicitly create and maintain a persistent set of widgets or controls. Instead, you provide the GUI code in your application's render loop, and it's run every frame to process events and show the UI.
+
+- Dear ImGui is designed to be renderer agnostic, so it does not include the code to display the UI it creates. Instead, you need to provide a rendering backend. This is often done using popular graphics libraries like OpenGL, DirectX, or Vulkan. Similarly, it's designed to be platform agnostic, so it doesn't deal directly with the underlying platform windowing or the input system. Instead, you use platform-specific bindings, like those provided for GLFW, SDL, Win32, etc.
+
+- Some important features include:
+    1. Minimize state synchronization.
+        - With retained mode GUIs, there's often a complex system in place to ensure that the UI reflects the current state of the application. ImGui avoids this by having no retained state. You create the UI from the current state of your application each frame. This eliminates the need for a separate system to synchronize the UI with the game or application state.
+    2. Minimize UI-related state storage on user side.
+        - Since ImGui is an immediate mode GUI library, it does not require developers to store the state of UI elements between frames. This greatky reduces the memory footprint and state management complexity on the developer's side.
+    3. Minimize Setup and Maintenance
+        - ImGui is known for its ease of integration and minimal setup requirements. There's no need for separate UI design files or complex initialization. 
+        - A developer can start adding UI elements with just a few lines of code, and changes can be seen and tested immediately.
+    4. Easy to create dynamic UI
+        - When you're working with data that changes rapidly (like variables in a game debug menu), ImGui's immediate mode approach allows you to create a UI that is a direct reflection of your current dataset without extra work to ensure that changes in the data are reflected in the UI.
+    5. Easy to create Code-Driven and Data-Driven Tools
+        - Because you are essentially drawing the UI each frame based on the application's current state or data, it's straightforward to build tools that change based on what the code or data dictates. This can range from simple debug tools to complex in-game editors or other development tools.
+    6. Easy to create Ad Hoc and Elaborate Tools
+        - The simplicity of ImGui's API makes it perfect for quickly creating tools for specific tasks (ad hoc). At the same time, its robustness allows for the development of more permanent and elaborate tools, which can evolve with the needs of the project.
+    7. Portable, Minimize Dependencies
+        - ImGui has minimal dependencies, relying only on C++ standard libraries. This makes it highly portable and easy to run on various platforms, including consoles and mobile devices where standard OS features might not be available or are different from the desktop environment.
+    8. Efficient Runtime and Memory Consumption
+        - ImGui is designed to be lightweight and efficient, both in terms of CPU and memory usage. This efficiency is crucial for high-performance applications like games, where resource management is critical.
 
 
-## Building and Running
+### nfd
+- GitHub: https://github.com/mlabbe/nativefiledialog
 
-Run, from a command prompt that has your compiler available:
-```
-#change to the directory with the repository:
-$ cd Scotty3D
-#use Maek to build the code:
-Scotty3D$ node Maekfile.js
-#run the UI:
-Scotty3D$ ./Scotty3D
-#run the tests:
-Scotty3D$ ./Scotty3D --run-tests
-```
-Note that you _should_ read `Maekfile.js`. about the available command line options and how to configure your own build. All the code has been nicely documented to help you understand the building process and reinforce your learning.
+- Native File Dialog (NFD) is a small, portable C++ library that provides bindings to the native file dialog APIs of various platforms. When you want to open or save files using a dialog box in a C++ program, you could write your own code using the operating system's APIs or use a cross-platform toolkit like Qt or wxWidgets. NFD offers an alternative that's much lighter-weight than such toolkits.
 
-When using with `--run-tests` option, you may realize that the program is running every test file under tests directory. If you wish to specify which tests to run, you can specify the substring your desired tests cases include. For example, running `./Scotty3D --run-tests "A0"` runs all test cases with substring "A0" in its test function name.
+- The advantage of using NFD is that it gives you a file dialog that looks and feels like it's part of the user's operating system, because it is. THis can be important for desktop applications where you want to match the native look and feel as closely as possible.
 
-Below is a non-exhaustive list of common build issues along with their suggested solutions. Let us know if you encounter a problem that is not addressed here.
+- Here are some key points about Native File Dialog:
+    1. Cross-Platform
+        - NFD provides a consistent interface across different operating systems such as Windows, macOS, and various Linux distributions.
+    2. Lightweight
+        - It is designed to be minimalistic, doing only one thing and doing it well, without the overhead of larger GUI libraries.
+    3. Native Look and Feel
+        - It uses the operating system's native file dialog, ensuring that your application's file dialog will look familiar to users.
+    4. Easy to Integrate
+        - Because it's a small library, it's relatively easy to add to existing projects.
+    5. Open Source
+        - The library is typically open source, meaning you can use and modify it according to its license.
 
-### macOS
-> `unknown warning option '-Wno-unused-but-set-variable'`
 
-`'-Wno-unused-but-set-variable'` is a [new compiler flag introduced in Clang 13.0.0](https://releases.llvm.org/13.0.0/tools/clang/docs/ReleaseNotes.html#new-compiler-flags), so you may encounter this error if your Clang is not up to date. To resolve this, do the following:
+### sejp
+- GitHub: https://github.com/ixchow/sejp
 
-1. Check that your macOS version is Monterey or above, then upgrade Xcode to the latest version (should be at least Version 13.0).
-2. Open Xcode and navigate to the top menu bar. Select **Xcode->Preferences->Locations**, then set **Command Line Tools** to your latest Xcode version (e.g. Xcode 14.2 (14C18)). 
-3. Run `clang -v` in your terminal to check if thel Clang version is $\ge$ 13:
-```
-Apple clang version 14.0.0 (clang-1400.0.29.202)
-Target: ...
-Thread model: ...
-InstalledDir: ...
-```
-4. Re-try building Scotty3D. If the error still shows up, go to `Maekfile.js` and comment out the line where the flag is located. We included this flag because it is beneficial to your learning and omitting it may cause it to not build on some other computers.
+- The Somewhat Eager JSON Parser, abbreviated as SEJP, is a specialized software library that is used for parsing JSON (JavaScript Object Notation) data within C++ programs. JSON is a lightweight data-interchange format that is easy for humans to read and write, and easy for machines to parse and generate. It is commonly used for transmitting data in web applications and for storing configuration settings.
 
-### Linux
-> `/usr/bin/ld: cannot find -lasound`
+- The primary function of SEJP is to take JSON formatted data that is typically received as a stream — for example, from a file, a network connection, or standard input — and then process that data into a form that is usable within a C++ program. 
 
-Your machine is missing a package. Simply install it by running `apt-get install libasound2-dev`.
+- In this context, "dynamically-typed values" means that the data types of the values in the JSON data are determined at runtime rather than at compile time, which is the norm for statically-typed languages like C++. This dynamic typing is beneficial when dealing with JSON because JSON data structures can contain a mix of types such as numbers, strings, booleans, arrays, and objects, and the schema of the JSON might not be known until the data is actually read.
 
-### Windows
-> `library machine type 'x64' conflicts with target machine type 'x86'`
 
-You are probably building from a shell with the developer tools set to target x86 (older, 32-bit instruction set) instead of x64 (modern, 64-bit flavor of x86, also sometimes known as “x86_64”). Check [this guide](https://learn.microsoft.com/en-us/cpp/build/how-to-enable-a-64-bit-visual-cpp-toolset-on-the-command-line?view=msvc-170) for enabling an x64 toolset on the command line.
+### Command Line Parser for C++11
+- GitHub: https://github.com/CLIUtils/CLI11
 
-> `spawn cl.exe ENOENT`
+- CLI11 is a contemporary, header-only library for parsing command line arguments in C++11 and later standards. Developed with usability and flexibility in mind, it provides a straightforward way for C++ developers to create command line interfaces that are both powerful and easy to understand. As a modern library, CLI11 leverages the enhanced features of C++11, such as smart pointers, lambda functions, and automatic type deduction, to facilitate a more expressive and efficient codebase.
 
-You are probably not building from a command prompt that has your compiler (cl.exe) available. Make sure that you are using **x64 Native Tools Command Prompt for VS 2022** (or run the proper `vcvars.bat` from whatever shell you happen to be using). If the error still shows up, run `cl.exe` from the prompt to check that it is indeed working. If not, your visual studio install might have been set up incorrectly.
+- At its core, CLI11 allows developers to define expected arguments, flags, options, and subcommands in their applications with minimal boilerplate. This definition includes the setup of default values, type-checking, and customized help messages. The library handles parsing the command line inputs and automatically converts them to the defined C++ types. It also generates help and error messages, which reduces the need for additional code to handle common command line interface tasks.
 
-## Updating
-When switching to a new assignment, you should `git pull sourcerepo main` to obtain the latest handout version, resolve conflicts, and try building Scotty3D before starting the new assignment. Some build issues might occur:
+- One of the defining features of CLI11 is its support for subcommands, enabling the creation of nested command-line interfaces. This is particularly useful for complex applications that perform a variety of functions, each potentially requiring its own set of options and parameters. Additionally, CLI11's composability means that these subcommands and their interfaces can be defined in isolation and then combined, promoting modular design.
 
-> `duplicate symbols for architecture x86_64`
+### stb_image.h
+- GitHub: https://github.com/nothings/stb
 
-This is likely because you have declared a helper function in a file `A.cpp` that is included in a different file `B.cpp`. When linking, your helper function appears in both `A.o` and `B.o`, which is typically not allowed as the error suggests. To avoid this, declare your helper function as `static` or `inline` to tell the linker it is okay to have it appear multiple times in different object files. More detail:
+- stb_image.h is a notable part of the "stb" collection of libraries for C/C++ which provides a robust solution for image loading and decoding. It serves as a standalone tool for loading images from various file formats, which includes popular ones such as JPEG, PNG, BMP, TGA, and GIF, among others.
 
-* `static` means “internal linkage” (function name isn’t exported by the object file) - See [reference](https://en.cppreference.com/w/cpp/language/storage_duration)
-* `inline` means “okay to have multiple [identical] definitions” (function name is exported but linker will ignore one of them) - See [reference](https://en.cppreference.com/w/cpp/language/inline)
+- The usability of stb_image.h extends to its versatility and customization. Programmers can load images with varying channel requirements, converting them on-the-fly to grayscale, RGB, or RGBA. Moreover, it allows for customization through preprocessor macros to toggle features or adjust memory allocation strategies, catering to both simple and advanced use cases.
 
-## Useful Resources
-More info about Scotty3D can be found in the [User Guide](https://cmu-graphics.github.io/Scotty3D-docs/guide/) (and again, `Maekfile.js`!). We will also post on [Piazza](https://piazza.com/class/l7euxsj4kf4ht/) if there's an update you should be aware of. Make sure you have access to these, and don't hesitate to ask questions!
+
+### stb_image_write.h
+- GitHub: https://github.com/nothings/stb
+
+- stb_image_write.h is a complementary header file to stb_image.h within the stb library collection, which is designed to facilitate the saving of images to disk.
+
+-  It can be used to quickly snapshot the state of a rendering application or save procedurally generated textures. Its API is intentionally kept straightforward, which means saving an image can typically be done with a single function call that specifies the desired image format, quality, and destination file path.
+
+- Developers can fine-tune the compression levels for certain formats, and the library offers the ability to define custom memory allocation and deallocation functions, allowing it to be adapted for various environments or stricter memory management regimes.
+
+
+### stb_perlin.h
+- GitHub: https://github.com/nothings/stb
+
+- stb_perlin.h is part of the stb single-file public domain libraries for C/C++, which provides functions to generate Perlin noise. Perlin noise, created by Ken Perlin in the 1980s, is a gradient noise function that is widely used in computer graphics to produce natural-looking textures, terrain, and other procedural generation tasks.
+
+- The functions provided by stb_perlin.h allow generation of Perlin noise values at any point in 2D, 3D, or 4D space. It also offers features such as seamless tiling of noise, which is quite useful for generating textures that can be tiled without visible seams. Additionally, there are options to adjust parameters like octaves, for fractal noise generation, to control the level of detail and how "zoomed in" or "smooth" the noise appears.
+
