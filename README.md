@@ -115,3 +115,144 @@
 - stb_perlin.h is part of the stb single-file public domain libraries for C/C++, which provides functions to generate Perlin noise. Perlin noise, created by Ken Perlin in the 1980s, is a gradient noise function that is widely used in computer graphics to produce natural-looking textures, terrain, and other procedural generation tasks.
 
 - The functions provided by stb_perlin.h allow generation of Perlin noise values at any point in 2D, 3D, or 4D space. It also offers features such as seamless tiling of noise, which is quite useful for generating textures that can be tiled without visible seams. Additionally, there are options to adjust parameters like octaves, for fractal noise generation, to control the level of detail and how "zoomed in" or "smooth" the noise appears.
+
+## Modules
+
+### geometry
+- halfedge-global.cpp (796 lines with TODO)
+- halfedge-local.cpp (490 lines with TODO)
+- halfedge-utility.cpp (923 lines)
+- halfedge.h (523 lines with TODO)
+- indexed.cpp (141 lines)
+- indexed.h (50 lines)
+- meshedit.cpp (nothing?)
+- spline.cpp (40 lines with TODO)
+- spline.h (158 lines)
+- util.cpp (823 lines with TODO)
+- util.h (72 lines)
+
+### gui
+- animate.cpp (723 lines with TODO)
+- animate.h (78 lines)
+- manager.cpp (2150 lines)
+- manager.h (171 lines)
+- model.cpp (1150 lines)
+- model.h (120 lines)
+- modifiers.h (13 lines)
+- render.cpp (67 lines)
+- rig.cpp (450 lines)
+- rig.h (64 lines)
+- simulate.h (44 lines)
+- widgets.cpp (1700 lines)
+- widgets.h (263 lines)
+
+
+### lib
+- bbox.h (140 lines)
+- line.h (50 lines)
+- log.h (57 lines)
+- mat4.h (503 lines)
+- mathlib.h (39 lines)
+- plane.h (46 lines)
+- quat.h (180 lines)
+- ray.h (54 lines)
+- spectrum.h (170 lines)
+- vec2.h (204 lines)
+- vec3.h (240 lines)
+- vec4.h (240 lines)
+
+
+### pathtracer
+- aggregate.h (68 lines)
+- bvh.cpp (180 lines with TODO)
+- bvh.h (60 lines)
+- instance.h (94 lines)
+- list.h (72 lines)
+- pathtracer.cpp (625 lines with TODO)
+- pathtracer.h (120 lines with TODO)
+- samplers.cpp (140 lines with TODO)
+- samplers.h (97 lines)
+- trace.h (50 lines)
+- tri_mesh.cpp (159 lines with TODO)
+- tri_mesh.h (80 lines)
+
+
+### rasterizer
+- framebuffer.cpp (40 lines with TODO)
+- framebuffer.h (50 lines with TODO)
+- pipeline.cpp (520 lines)
+- pipeline.h (157 lines)
+- programs.h (210 lines with TODO)
+- rasterizer.cpp (700 lines with TODO)
+- rasterizer.h (70 lines with TODO)
+- sample_pattern.cpp (62 lines with TODO)
+- sample_pattern.h (34 lines with TODO)
+
+
+### scene
+- animator.cpp (441 lines with TODO)
+- animator.h (70 lines with TODO)
+- camera.cpp (88 lines with TODO)
+- camera.h (60 lines)
+- delta_light.cpp (70 lines)
+- delta_light.h (123 lines)
+- env_light.cpp (67 lines)
+- instance.h (222 lines)
+- introspect.h (130 lines)
+- io.cpp (100 lines)
+- io.h (20 lines)
+- load-save-json.cpp (700 lines)
+- load-save.cpp (2400 lines)
+- material.cpp (286 lines)
+- material.h (230 lines)
+- particles.cpp (100 lines)
+- particles.h (71 lines)
+- scene-step.cpp (120 lines)
+- scene.cpp (330 lines)
+- scene.h (248 lines)
+- shape.cpp (70 lines with TODO)
+- shape.h (85 lines)
+- skeleton.cpp (300 lines)
+- skeleton.h (170 lines)
+- texture.cpp (160 lines with TODO)
+- texture.h (123 lines)
+- transform.cpp (30 lines)
+- transform.h (37 lines)
+- undo.cpp (103 lines)
+- undo.h (230 lines)
+
+
+### util
+- hdr_image.cpp (236 lines with TODO)
+- hdr_image.h (80 lines with TODO)
+- rand.cpp (61 lines)
+- rand.h (34 lines)
+- thread_pool.cpp (71 lines)
+- thread_pool.h (51 lines)
+- timer.cpp (41 lines)
+- timer.h (26 lines)
+- to_json.cpp (644 lines)
+- to_json.h (75 lines)
+- viewer.cpp (150 lines)
+- viewer.h (75 lines)
+
+
+### app.cpp and app.h
+- app.cpp (212 lines)
+- app.h (51 lines)
+
+### main.cpp
+- main.cpp (368 lines)
+
+### test.cpp and test.h
+- test.cpp (788 lines)
+- test.h (106 lines)
+
+
+
+
+# Path to rebuild
+- app.h (51 lines)
+- app.cpp (212 lines)
+
+- 
