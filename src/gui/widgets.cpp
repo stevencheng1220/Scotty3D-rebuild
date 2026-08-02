@@ -6,10 +6,10 @@
 #include <sf_libs/stb_image_write.h>
 #include <sstream>
 
-#include "manager.h"
+// #include "manager.h"
 #include "widgets.h"
 
-#include "../app.h"
+// #include "../app.h"
 #include "../geometry/util.h"
 #include "../platform/platform.h"
 #include "../platform/renderer.h"

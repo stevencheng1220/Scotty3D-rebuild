@@ -11,7 +11,7 @@
 #include "../platform/gl.h"
 #include "../scene/scene.h"
 #include "../util/viewer.h"
-#include "manager.h"
+// #include "manager.h"
 
 namespace Gui {
 

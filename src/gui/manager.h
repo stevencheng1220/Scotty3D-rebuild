@@ -78,8 +78,8 @@ public:
 	bool choose_instance(const std::string& label, const std::shared_ptr<I>& instance, std::weak_ptr<R>& resource, bool can_be_null = false);
 	void edit_camera(std::shared_ptr<Instance::Camera> inst, View_3D& gui_cam);
 
-	Render& get_render();
-	Animate& get_animate();
+	// Render& get_render();
+	// Animate& get_animate();
 	Simulate& get_simulate();
 	void shutdown();
 
@@ -131,11 +131,11 @@ private:
 	Vec2 window_dim;
 	
 	// UI modes
-	Model model;
-	Render render;
-	Rig rig;
+	// Model model;
+	// Render render;
+	// Rig rig;
 	Simulate simulate;
-	Animate animate;
+	// Animate animate;
 
 	// 2D UI components
 	Widget_Transform transform_widget;

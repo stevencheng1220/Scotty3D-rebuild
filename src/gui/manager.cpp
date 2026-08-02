@@ -12,7 +12,7 @@
 #include "../platform/platform.h"
 #include "../platform/renderer.h"
 #include "../scene/undo.h"
-#include "../test.h"
+// #include "../test.h"
 #include "../scene/io.h"
 
 namespace Gui {

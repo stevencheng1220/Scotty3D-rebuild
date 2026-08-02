@@ -2,13 +2,13 @@
 #include <algorithm>
 #include <imgui/imgui_custom.h>
 
-#include "manager.h"
+// #include "manager.h"
 #include "model.h"
 #include "widgets.h"
 
 #include "../geometry/util.h"
 #include "../platform/renderer.h"
-#include "../scene/undo.h"
+// #include "../scene/undo.h"
 
 namespace Gui {
 
